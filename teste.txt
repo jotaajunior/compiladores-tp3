@@ -1,0 +1,13 @@
+n1 = 9.0
+n2 = 7.5
+n3 = 6.5
+parcial = (n1*4 + n2*5 + n3*6) / 15
+if (parcial >= 7) print("aprovado")
+
+total = 3
+if (parcial < 5) total = total + 1
+print(total)
+
+r = sqrt(2)
+print("raiz de 2 = ", r)
+print(pow(r, 2))
