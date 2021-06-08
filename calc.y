@@ -41,6 +41,7 @@ unordered_map<string, double> variables;
 %left '+' '-'
 %left  '<' "<=" '>' ">="
 %left '*' '/'
+
 %nonassoc UMINUS
 
 %%
@@ -49,8 +50,8 @@ math: math calc
 	| calc
 	;
 
-calc: ID '=' expr 			    { variables[$1] = $3; }
-	 | expr					          { cout << "= " << $1 << "\n"; }
+
+calc: expr					        { cout << "= " << $1 << "\n"; }
    | PRINT '(' args ')'     { cout << $3 << "\n"; }
 	 | ifPrint
 	 | ifAttr
@@ -59,6 +60,7 @@ calc: ID '=' expr 			    { variables[$1] = $3; }
 
 ifPrint: IF '(' expr ')' PRINT '(' args ')'
 	{
+		/* if + print */
 		if ($3) {
 			cout << $7 << '\n';
 		}
@@ -66,6 +68,7 @@ ifPrint: IF '(' expr ')' PRINT '(' args ')'
 
 ifAttr: IF '(' expr ')' ID '=' expr
 	{
+		/* if + atribuição */
 		if ($3) {
 			variables[$5] = $7;
 		}
@@ -107,6 +110,7 @@ expr: expr '+' expr		  { $$ = ($1 + $3); }
 	| SQRT '(' expr ')'          { $$ = sqrt($3); }
 	| ID					               { $$ = variables[$1]; }
 	| NUM
+	| ID '=' expr { variables[$1] = $3; $$ = $3; /* permite atribuições do tipo: a = b = c */ }
 	;
 
 
