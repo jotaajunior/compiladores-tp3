@@ -27,8 +27,8 @@ id		         {letra_}({letra_}|{digito})*
 "sqrt"                 { return SQRT; }
 "pow"                  { return POW; }
 
-\"                     { BEGIN TEXT; }
-<TEXT>(\\.|[^\"])*     { strcpy(yylval.text, yytext);  }
+\"                     { BEGIN TEXT; /* leitura de strings */ }
+<TEXT>(\\.|[^\"])*     { strcpy(yylval.text, yytext);  /* permite escape de caracteres */ }
 <TEXT>\"               { BEGIN INITIAL; return STRING; }
 
 [\t ]+		             { ; /* ignora espaço em branco */ }
